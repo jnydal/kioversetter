@@ -7,5 +7,5 @@ export default defineConfig({
   base: "/kioversetter/",
     //build: {
     //  outDir: 'dist',  // This should match the output folder
-    //},
+    //},   
 })
