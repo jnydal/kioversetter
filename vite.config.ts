@@ -5,4 +5,16 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: "/aitranscribe/",
+  optimizeDeps: {
+      esbuildOptions: {
+        define: {
+          global: 'window', // This will help with browser-specific globals
+        },
+      },
+    },
+    resolve: {
+      alias: {
+        crypto: 'crypto-browserify',
+      },
+    },
 })
