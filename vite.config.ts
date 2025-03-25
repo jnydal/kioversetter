@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: "/kioversetter/",
-    build: {
-      outDir: 'dist',  // This should match the output folder
-    },
+    //build: {
+    //  outDir: 'dist',  // This should match the output folder
+    //},
 })
