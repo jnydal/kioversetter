@@ -34,7 +34,7 @@ const App = () => {
         {transcript || "Oversatt tekst dukker opp her..."}
       </Typography>
     <Typography variant="h6" gutterBottom>
-      Thor Nydal
+      Thor Nydal.
     </Typography>
     </Container>
   );
