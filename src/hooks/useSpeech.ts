@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react"; // add useEffect later
 import { useDispatch } from "react-redux";
 import { setTranscript, toggleRecording } from "../store";
 import axios from "axios";
