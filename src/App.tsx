@@ -34,6 +34,11 @@ const App = () => {
         {transcript || "Oversatt tekst dukker opp her..."}
       </Typography>
     </Container>
+    <Container maxWidth="sm" style={{ textAlign: "center", marginTop: "50px" }}>
+      <Typography variant="h6" gutterBottom>
+        Thor Nydal
+      </Typography>
+    </Container>
   );
 };
 
