@@ -42,12 +42,13 @@ const useSpeech = () => {
         const formData = new FormData();
         formData.append("file", audioBlob);
 
-        if (!process.env.REACT_APP_AZURE_SPEECH_FUNCTION_KEY) {
+        const azureSpeechFunctionUrl = process.env.REACT_APP_AZURE_SPEECH_FUNCTION_KEY as string;
+        if (!azureSpeechFunctionUrl) {
           throw new Error("Azure Function Key is missing");
         }
 
         const response = await axios.post(
-          process.env.REACT_APP_AZURE_SPEECH_FUNCTION_KEY, // Replace with your Azure function URL
+          azureSpeechFunctionUrl, // Replace with your Azure function URL
           formData,
           {
             headers: {
