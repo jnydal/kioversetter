@@ -15,10 +15,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Show secret (for debugging purposes only, do not leave in production)
-        run: echo ${{ secrets.AZURE_SPEECH_FUNCTION_KEY }}
-        env:
-          AZURE_SPEECH_FUNCTION_KEY: ${{ secrets.AZURE_SPEECH_FUNCTION_KEY }}
+      - name: Set up environment variables
+        run: echo "REACT_APP_AZURE_SPEECH_FUNCTION_KEY=${{ secrets.AZURE_SPEECH_FUNCTION_KEY }}" >> $GITHUB_ENV
 
       # Step 2: Set up Node.js
       - name: Set up Node.js
