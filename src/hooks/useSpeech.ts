@@ -44,7 +44,9 @@ const useSpeech = () => {
 
         const azureSpeechFunctionUrl = process.env.REACT_APP_AZURE_SPEECH_FUNCTION_KEY as string;
         if (!azureSpeechFunctionUrl) {
-          throw new Error("Azure Function Key is missing...");
+          //throw new Error("Azure Function Key is missing...");
+          azureSpeechFunctionUrl = "http://azure-speech-fucntions.azurewebsites.net/api/realTimeSpeechToText?code=G49Ysma5D-pH9oIRXhyw-DBvaGh-dMzV1ikRnWYYnnxGAzFuotYEEg==";
+          // todo improve
         }
 
         const response = await axios.post(
