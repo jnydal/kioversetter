@@ -43,7 +43,7 @@ const useSpeech = () => {
         formData.append("file", audioBlob);
 
         const response = await axios.post(
-          process.env.REACT_APP_AZURE_SPEECH_FUNCTION_KEY || "http://dummyvalue.com", // Replace with your Azure function URL
+          process.env.REACT_APP_AZURE_SPEECH_FUNCTION_KEY, // Replace with your Azure function URL
           formData,
           {
             headers: {
