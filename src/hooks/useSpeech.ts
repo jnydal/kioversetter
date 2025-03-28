@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"; // add useEffect later
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setTranscript, toggleRecording } from "../store";
 import axios from "axios";
@@ -17,35 +17,15 @@ const useSpeech = () => {
       mediaRecorder.current.ondataavailable = (event) => {
         if (event.data.size > 0) {
           audioChunks.current.push(event.data);
+          sendAudioChunks();  // Send each chunk as it becomes available
         }
       };
 
-      mediaRecorder.current.onstop = async () => {
-        const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
-        audioChunks.current = [];
-
-        // Send to Azure Speech-to-Text API
-        const formData = new FormData();
-        formData.append("file", audioBlob);
-
-        try {
-          const response = await axios.post(
-            "YOUR_AZURE_SPEECH_TO_TEXT_ENDPOINT",
-            formData,
-            {
-              headers: {
-                "Ocp-Apim-Subscription-Key": "YOUR_AZURE_API_KEY",
-                "Content-Type": "audio/wav",
-              },
-            }
-          );
-          dispatch(setTranscript(response.data.transcription));
-        } catch (error) {
-          console.error("Speech recognition error", error);
-        }
+      mediaRecorder.current.onstop = () => {
+        // Handle any cleanup if needed after stopping
       };
 
-      mediaRecorder.current.start();
+      mediaRecorder.current.start(500);  // Start recording and send every 500ms
       dispatch(toggleRecording(true));
       setIsRecording(true);
     } catch (error) {
@@ -53,15 +33,44 @@ const useSpeech = () => {
     }
   };
 
-  const stopRecording = () => {
-    if (mediaRecorder.current && isRecording) {
-      mediaRecorder.current.stop();
-      dispatch(toggleRecording(false));
-      setIsRecording(false);
+  const sendAudioChunks = async () => {
+    if (audioChunks.current.length > 0) {
+      const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
+      audioChunks.current = [];
+
+      try {
+        const formData = new FormData();
+        formData.append("file", audioBlob);
+
+        const response = await axios.post(
+          process.env.REACT_APP_AZURE_SPEECH_FUNCTION_KEY, // Replace with your Azure function URL
+          formData,
+          {
+            headers: {
+              "Content-Type": "audio/wav",
+            },
+          }
+        );
+
+        // Assuming the response contains the transcript text from your Azure function
+        dispatch(setTranscript(response.data)); // Set the transcription
+      } catch (error) {
+        console.error("Error sending audio to Azure function", error);
+      }
     }
   };
 
-  return { isRecording, startRecording, stopRecording };
+  const stopRecording = () => {
+    mediaRecorder.current?.stop();
+    dispatch(toggleRecording(false));
+    setIsRecording(false);
+  };
+
+  return {
+    isRecording,
+    startRecording,
+    stopRecording,
+  };
 };
 
 export default useSpeech;
