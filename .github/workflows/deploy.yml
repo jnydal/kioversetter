@@ -23,11 +23,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Inject Azure Function Key into .env
-        run: echo "REACT_APP_AZURE_SPEECH_FUNCTION_KEY=${{ secrets.AZURE_SPEECH_FUNCTION_KEY }}" >> .env
+      #- name: Inject Azure Function Key into .env
+      #  run: echo "REACT_APP_AZURE_SPEECH_FUNCTION_KEY=${{ secrets.AZURE_SPEECH_FUNCTION_KEY }}" >> .env
 
       # Step 4: Build the project
       - name: Build the project
+        env:
+          REACT_APP_AZURE_SPEECH_FUNCTION_KEY: ${{ secrets.AZURE_SPEECH_FUNCTION_KEY }}
         run: npm run build
 
       # Step 5: Deploy to GitHub Pages
