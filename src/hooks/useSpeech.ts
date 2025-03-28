@@ -42,7 +42,7 @@ const useSpeech = () => {
         const formData = new FormData();
         formData.append("file", audioBlob);
 
-        const azureSpeechFunctionUrl = process.env.REACT_APP_AZURE_SPEECH_FUNCTION_KEY || "http://azure-speech-fucntions.azurewebsites.net/api/realTimeSpeechToText?code=G49Ysma5D-pH9oIRXhyw-DBvaGh-dMzV1ikRnWYYnnxGAzFuotYEEg==";;
+        const azureSpeechFunctionUrl = process.env.REACT_APP_AZURE_SPEECH_FUNCTION_KEY || "https://azure-speech-fucntions.azurewebsites.net/api/realTimeSpeechToText?code=G49Ysma5D-pH9oIRXhyw-DBvaGh-dMzV1ikRnWYYnnxGAzFuotYEEg==";;
         if (!azureSpeechFunctionUrl) {
           throw new Error("Azure Function Key is missing...");
         }
